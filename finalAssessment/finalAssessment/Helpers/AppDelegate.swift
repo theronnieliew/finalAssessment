@@ -62,7 +62,7 @@ extension AppDelegate{
     }
     
     func handleAuthNotification(_ notification : Notification){
-        self.checkLoadPage(storyboard: "Main", controllername: "ViewController")
+        self.checkLoadPage(storyboard: "Profile", controllername: "ProfileViewController")
     }
     
     func checkLoadPage(storyboard : String, controllername : String){

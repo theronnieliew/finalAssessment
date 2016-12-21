@@ -21,7 +21,11 @@ class LoginViewController: UIViewController {
         }
     }
 
-    @IBOutlet weak var signupButton: UIButton!
+    @IBOutlet weak var signupButton: UIButton!{
+        didSet{
+            signupButton.addTarget(self, action: #selector(signUpButtonTapped(button:)), for: .touchUpInside)
+        }
+    }
     
     var ref : FIRDatabaseReference!
     
@@ -58,18 +62,15 @@ class LoginViewController: UIViewController {
     }
     
     @objc private func signUpButtonTapped(button : UIButton){
-        
+        let storyboard = UIStoryboard(name: "Register", bundle: nil)
+        let controller = storyboard.instantiateViewController(withIdentifier: "SignUpViewController") as! SignUpViewController
+        controller.delegate = self
+        present(controller, animated: true, completion: nil)
     }
-    
+}
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+extension LoginViewController : SignUpViewControllerDelegate{
+    func dismissView() {
+        dismiss(animated: true, completion: nil)
     }
-    */
-
 }

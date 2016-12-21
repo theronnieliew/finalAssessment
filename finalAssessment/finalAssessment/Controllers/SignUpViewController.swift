@@ -11,12 +11,24 @@ import Firebase
 import FirebaseAuth
 import FirebaseDatabase
 
+protocol SignUpViewControllerDelegate {
+    func dismissView()
+}
+
 class SignUpViewController: UIViewController {
 
+    @IBOutlet weak var profilePicView: UIImageView!
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var profilePictureView: UIImageView!
+    @IBOutlet weak var genderTextField: UITextField!
+    @IBOutlet weak var descriptionTextView: UITextView!
+    @IBOutlet weak var ageTextField: UITextField!{
+        didSet{
+            ageTextField.keyboardType = UIKeyboardType.numberPad
+        }
+    }
     
     @IBOutlet weak var createAccountButton: UIButton!{
         didSet{
@@ -25,6 +37,7 @@ class SignUpViewController: UIViewController {
     }
     
     var ref: FIRDatabaseReference!
+    var delegate : SignUpViewControllerDelegate?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,8 +50,12 @@ class SignUpViewController: UIViewController {
         
         guard let name = nameTextField.text,
             let email = emailTextField.text,
-            let password = passwordTextField.text
-            else { return }
+            let password = passwordTextField.text,
+            let age = ageTextField.text,
+            let gender = genderTextField.text
+            else {
+                return
+        }
         
         if password.characters.count < 6 {
             AlertController.alertPopUp(viewController: self, titleMsg: "Error", message: "Please assure your password contains at least 6 or more charaters", cancelMsg: "Ok")
@@ -54,16 +71,18 @@ class SignUpViewController: UIViewController {
             //!Give default icon
             let pic = "https://firebasestorage.googleapis.com/v0/b/finalassessment-fed76.appspot.com/o/defaultIcon.png?alt=media&token=2f00d4fd-c75f-414d-aabe-5934c3d8197b"
             
-            self.ref.child("users").child((user?.uid)!).setValue(["email" : email, "name" : name, "profile-pic" : pic])
+            self.ref.child("users").child((user?.uid)!).setValue(["email" : email, "name" : name, "age" : age, "gender" : gender, "description" : self.descriptionTextView.text!, "profile-pic" : pic])
             
-            print("Successfully registered you nigga!!")
+            print("Successfully registered current user")
         })
     }
     
     func notifySuccessfulSignUp(){
-        
         let authSuccessNotification = Notification(name: Notification.Name(rawValue: "AuthSuccessNotification"))
-        
         NotificationCenter.default.post(authSuccessNotification)
+    }
+    
+    @IBAction func backbuttonTapped(_ sender: AnyObject) {
+        delegate?.dismissView()
     }
 }
