@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         FIRAuth.auth()?.addStateDidChangeListener { auth, user in
             if user != nil {
-                self.checkLoadPage(storyboard: "Main", controllername: "ViewController")
+                self.checkLoadPage(storyboard: "Main", controllername: "ExploreViewController")
             } else {
                 self.checkLoadPage(storyboard: "Register", controllername: "LoginViewController")
             }
@@ -62,7 +62,7 @@ extension AppDelegate{
     }
     
     func handleAuthNotification(_ notification : Notification){
-        self.checkLoadPage(storyboard: "Profile", controllername: "ProfileViewController")
+        self.checkLoadPage(storyboard: "Main", controllername: "ExploreViewController")
     }
     
     func checkLoadPage(storyboard : String, controllername : String){

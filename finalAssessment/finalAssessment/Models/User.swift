@@ -9,4 +9,7 @@ class User{
     var profilePicURL = ""
     
     var ID = ""
+    
+    var unMatchedList : [String] = []
+    var matchedList : [String] = []
 }
