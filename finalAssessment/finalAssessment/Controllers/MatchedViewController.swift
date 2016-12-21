@@ -44,6 +44,9 @@ class MatchedViewController: UIViewController {
             user.name = userDict["name"] as! String
             user.description = userDict["description"] as! String
             user.profilePicURL = userDict["profile-pic"] as! String
+            user.age = userDict["age"] as! String
+            user.email = userDict["email"] as! String
+            user.gender = userDict["gender"] as! String
             
             self.matchedUsers.append(user)
             self.tableView.reloadData()

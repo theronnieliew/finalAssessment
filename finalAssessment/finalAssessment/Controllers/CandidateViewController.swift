@@ -36,6 +36,7 @@ class CandidateViewController: UIViewController {
         genderLabel.text = user.gender
         emaillabel.text = user.email
         descriptionTextView.text = user.description
+        profileImageView.loadImageUsingCacheWithUrlString(user.profilePicURL)
     }
     
     @IBAction func unmatchButtonTapped(_ sender: AnyObject) {
